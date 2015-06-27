@@ -38,6 +38,7 @@ class ZeroMQExtension(val system: ActorSystem) extends Extension {
   interruptPub.connect(interruptAddress)
 
   private val pollIndex: Int = poller.register(interruptSub, ZMQ.Poller.POLLIN)
+
   private val pollInterrupter = system.actorOf(PollInterrupter(interruptPub).withDispatcher("zeromq.poll-interrupter-dispatcher"), "zeromq-poll-interrupter")
   private val socketManager = system.actorOf(SocketManager(zmqContext, poller, interruptSub, pollIndex, pollInterrupter).withDispatcher("zeromq.socket-manager-dispatcher"), "zeromq-socket-manager")
 

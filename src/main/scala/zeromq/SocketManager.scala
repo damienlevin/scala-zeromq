@@ -102,14 +102,14 @@ private[zeromq] class SocketManager(
         }
         sender ! Success(handler)
       } catch {
-        case e: ZMQException ⇒ sender ! Status.Failure(e)
+        case e: Exception ⇒ sender ! Status.Failure(e)
       }
 
     case (handler: ActorRef, query: SocketOptionQuery) ⇒
       try {
         sockets.get(handler) map (_.getSocketOption(query)) map (sender ! _)
       } catch {
-        case e: ZMQException ⇒ sender ! Status.Failure(e)
+        case e: Exception ⇒ sender ! Status.Failure(e)
       }
   }
 
@@ -150,7 +150,7 @@ private[zeromq] class SocketManager(
       }
       Success(socket)
     } catch {
-      case e: ZMQException ⇒
+      case e: Exception ⇒
         Option(socket).map(_.close)
         Failure(e)
     }

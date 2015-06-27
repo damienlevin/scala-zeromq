@@ -6,7 +6,3 @@
    - oraclejdk7
    - openjdk7
    - openjdk6
- before_script:
-   - sh src/test/resources/setup_travis.sh
- env:
-   - LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
